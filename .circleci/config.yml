@@ -18,13 +18,13 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: venv-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: venv-2-{{ .Branch }}-{{ checksum "requirements.txt" }}
 
       - run:
           name: Dependencies
           command: |
             apt-get update
-            apt-get install -y python3.7 python3.7-venv python3.7-dev
+            apt-get install -y python3.7 python3.7-venv python3-dev
             python3.7 -m venv local3
             . local3/bin/activate
             pip install -U -r requirements.txt
@@ -42,7 +42,7 @@ jobs:
             if [ "$COVERALLS_REPO_TOKEN" != "" ]; then coveralls || true; fi
 
       - save_cache:
-          key: venv-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: venv-2-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - local
 
